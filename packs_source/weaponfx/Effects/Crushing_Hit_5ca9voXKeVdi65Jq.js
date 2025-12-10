@@ -1,4 +1,6 @@
-const { sourceToken } = game.modules.get("lancer-weapon-fx").api.getMacroVariables(this);
+const { sourceToken } = game.modules
+    .get("lancer-weapon-fx")
+    .api.getMacroVariables(this, typeof token !== "undefined" ? token : null);
 
 const pivotx = token.document.flags["hex-size-support"]?.pivotx || 0;
 const ipivotx = -pivotx;
