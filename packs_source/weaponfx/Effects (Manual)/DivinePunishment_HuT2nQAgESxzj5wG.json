@@ -1,0 +1,10 @@
+{
+    "_id": "HuT2nQAgESxzj5wG",
+    "name": "DivinePunishment",
+    "type": "script",
+    "img": "modules/lancer-weapon-fx/icons/missile-swarm.png",
+    "scope": "global",
+    "folder": "o8nGPmux6bWEpn9M",
+    "_key": "!macros!HuT2nQAgESxzj5wG",
+    "command_source": "packs_source/weaponfx/Effects (Manual)/DivinePunishment_HuT2nQAgESxzj5wG.js"
+}
