@@ -1,4 +1,6 @@
-const { targetsMissed, targetTokens, sourceToken } = game.modules.get("lancer-weapon-fx").api.getMacroVariables(this);
+const { targetsMissed, targetTokens, sourceToken } = game.modules
+    .get("lancer-weapon-fx")
+    .api.getMacroVariables(this, typeof token !== "undefined" ? token : null);
 
 await Sequencer.Preloader.preloadForClients([
     "jb2a.greataxe.melee.standard.white",

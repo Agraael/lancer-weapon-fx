@@ -1,4 +1,6 @@
-const { targetsMissed, targetTokens, sourceToken } = game.modules.get("lancer-weapon-fx").api.getMacroVariables(this);
+const { targetsMissed, targetTokens, sourceToken } = game.modules
+    .get("lancer-weapon-fx")
+    .api.getMacroVariables(this, typeof token !== "undefined" ? token : null);
 
 const centerMass = game.modules.get("lancer-weapon-fx").api.getTargetLocationsFromTokenGroup(targetTokens, 1)[0];
 

@@ -1,4 +1,6 @@
-const { targetsMissed, targetTokens, sourceToken } = game.modules.get("lancer-weapon-fx").api.getMacroVariables(this);
+const { targetsMissed, targetTokens, sourceToken } = game.modules
+    .get("lancer-weapon-fx")
+    .api.getMacroVariables(this, typeof token !== "undefined" ? token : null);
 
 // Pinaka wants 2 missiles, so get 2 groups
 const targetPoints = game.modules.get("lancer-weapon-fx").api.getTargetLocationsFromTokenGroup(targetTokens, 2);

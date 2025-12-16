@@ -1,4 +1,6 @@
-const { sourceToken } = game.modules.get("lancer-weapon-fx").api.getMacroVariables(this);
+const { sourceToken } = game.modules
+    .get("lancer-weapon-fx")
+    .api.getMacroVariables(this, typeof token !== "undefined" ? token : null);
 
 await Sequencer.Preloader.preloadForClients([
     "jb2a.explosion_side.01.orange.1",
