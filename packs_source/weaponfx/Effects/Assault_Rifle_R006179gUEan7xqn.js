@@ -1,6 +1,6 @@
 const { targetsMissed, targetsCrit, targetTokens, sourceToken } = game.modules
     .get("lancer-weapon-fx")
-    .api.getMacroVariables(this);
+    .api.getMacroVariables(this, typeof token !== "undefined" ? token : null);
 game.modules.get("lancer-weapon-fx").api.preloadMissAndCrit();
 
 await Sequencer.Preloader.preloadForClients(["modules/lancer-weapon-fx/soundfx/AR_Fire.ogg", "jb2a.bullet.01.orange"]);

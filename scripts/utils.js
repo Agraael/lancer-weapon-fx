@@ -32,8 +32,8 @@ export function getUniquePoints(points) {
     });
 }
 
-export function getMacroVariables(macro = null) {
-    const sourceTokenFallback = canvas.tokens.controlled[0] ?? game.combat?.current?.tokenId;
+export function getMacroVariables(macro = null, token = null) {
+    const sourceTokenFallback = token ?? canvas.tokens.controlled[0] ?? game.combat?.current?.tokenId;
     const targetsFallback = [...game.user.targets];
     const flowInfo = macro?.flags?.[MODULE_ID]?.flowInfo;
 

@@ -33,6 +33,11 @@ class ModuleApi {
         return LloydsAlgorithm.getCentroids(targetPoints, numGroups);
     }
 
+    static getSequencerPathVariant(partialSequencerPath) {
+        const pathsUnder = Sequencer.Database.getPathsUnder(partialSequencerPath);
+        return [partialSequencerPath, pathsUnder[Math.round((pathsUnder.length - 1) * Math.random())]].join(".");
+    }
+
     static getMacroVariables = getMacroVariables;
     static preloadMissAndCrit = preloadMissAndCrit;
     static addMissToSequence = addMissToSequence;

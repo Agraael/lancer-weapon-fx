@@ -1,6 +1,6 @@
 const { targetsMissed, targetsCrit, targetTokens, sourceToken } = game.modules
     .get("lancer-weapon-fx")
-    .api.getMacroVariables(this);
+    .api.getMacroVariables(this, typeof token !== "undefined" ? token : null);
 game.modules.get("lancer-weapon-fx").api.preloadMissAndCrit();
 
 const random = Sequencer.Helpers.random_float_between(300, 500);
