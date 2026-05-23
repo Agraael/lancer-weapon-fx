@@ -33,17 +33,19 @@ const _pGetFlowInfo = async (state, { fallbackActionIdentifier = null } = {}) =>
             itemName: state.item?.name,
             fallbackActionIdentifier: isThrow ? "default_throwfx" : fallbackActionIdentifier,
         }),
-        targetTokens: zippedTargetInfo.map(({ target }) => target.target).filter(Boolean),
+        targetTokens: zippedTargetInfo
+            .map(({ target, hit_result }) => hit_result?.target ?? target?.target)
+            .filter(Boolean),
         targetsMissed: new Set(
             zippedTargetInfo
                 .filter(({ hit_result }) => !hit_result?.hit)
-                .map(({ target }) => target?.target?.id)
+                .map(({ target, hit_result }) => (hit_result?.target ?? target?.target)?.id)
                 .filter(Boolean),
         ),
         targetsCrit: new Set(
             zippedTargetInfo
                 .filter(({ hit_result }) => hit_result?.crit)
-                .map(({ target }) => target?.target?.id)
+                .map(({ target, hit_result }) => (hit_result?.target ?? target?.target)?.id)
                 .filter(Boolean),
         ),
     });
@@ -113,7 +115,7 @@ const fallbackActionIdentifier_StructureFlow = flow => {
             case game.i18n.localize("lancer.tables.structureMonstrosity.title.fatal"):
                 return "lwfx_monstrosity_fatal";
             case game.i18n.localize("lancer.tables.structureMonstrosity.title.direct"):
-                return `lwfx_monstrosity_direct_hit_${Math.clamped(flow.state.data.remStruct, 1, 3)}`;
+                return `lwfx_monstrosity_direct_hit_${Math.clamp(flow.state.data.remStruct, 1, 3)}`;
             case game.i18n.localize("lancer.tables.structureMonstrosity.title.dismember"):
                 return "lwfx_monstrosity_dismember";
             case game.i18n.localize("lancer.tables.structureMonstrosity.title.powerful"):
@@ -130,7 +132,7 @@ const fallbackActionIdentifier_StructureFlow = flow => {
             return "lwfx_structure_crushing_hit";
         case game.i18n.localize("lancer.tables.structure.title.direct"):
         case game.i18n.localize("LANCER-ALT-STRUCTURE.StructureTitles.directHit"):
-            return `lwfx_structure_direct_hit_${Math.clamped(flow.state.data.remStruct, 1, 3)}`;
+            return `lwfx_structure_direct_hit_${Math.clamp(flow.state.data.remStruct, 1, 3)}`;
         case game.i18n.localize("lancer.tables.structure.title.trauma"):
         case game.i18n.localize("LANCER-ALT-STRUCTURE.StructureTitles.systemTrauma"):
             return "lwfx_structure_system_trauma";
@@ -156,7 +158,7 @@ const fallbackActionIdentifier_OverheatFlow = flow => {
 
         case "Meltdown":
         case game.i18n.localize("LANCER-ALT-STRUCTURE.StressTitles.meltdown"):
-            return `lwfx_overheat_meltdown_${Math.clamped(flow.state.data.remStress, 1, 3)}`;
+            return `lwfx_overheat_meltdown_${Math.clamp(flow.state.data.remStress, 1, 3)}`;
 
         case "Destabilized Power Plant":
             return "lwfx_overheat_destabilized_power_plant";
