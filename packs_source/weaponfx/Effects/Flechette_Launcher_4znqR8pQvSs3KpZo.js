@@ -1,4 +1,7 @@
-const { sourceToken } = game.modules.get("lancer-weapon-fx").api.getMacroVariables(this);
+const { targetsMissed, targetsCrit, targetTokens, sourceToken } = game.modules
+    .get("lancer-weapon-fx")
+    .api.getMacroVariables(this);
+game.modules.get("lancer-weapon-fx").api.preloadMissAndCrit();
 
 await Sequencer.Preloader.preloadForClients([
     "modules/lancer-weapon-fx/soundfx/Flechette.ogg",
@@ -25,4 +28,10 @@ let sequence = new Sequence()
         .scale(0.5)
         .repeats(6, 20)
         .atLocation(sourceToken, { randomOffset: 2.2, gridUnits: true })
-    .play();
+        .waitUntilFinished();
+
+for (const target of targetTokens) {
+    if (targetsMissed.has(target.id)) game.modules.get("lancer-weapon-fx").api.addMissToSequence(sequence, target.id);
+    if (targetsCrit.has(target.id)) game.modules.get("lancer-weapon-fx").api.addCritToSequence(sequence, target.id);
+}
+sequence.play();

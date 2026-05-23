@@ -1,54 +1,54 @@
+// Macro: Combat Knife Throw FX
 const { targetsMissed, targetsCrit, targetTokens, sourceToken } = game.modules
     .get("lancer-weapon-fx")
     .api.getMacroVariables(this);
+
 game.modules.get("lancer-weapon-fx").api.preloadMissAndCrit();
 
 await Sequencer.Preloader.preloadForClients([
-    "jb2a.melee_attack.03.greatsword",
     "modules/lancer-weapon-fx/soundfx/bladeswing.ogg",
     "modules/lancer-weapon-fx/soundfx/bladehit.ogg",
-    "jb2a.impact.blue",
+    "jb2a.greatsword.throw",
+    "jb2a.impact.001.blue",
 ]);
 
-let sequence = new Sequence();
+const volume = game.modules.get("lancer-weapon-fx").api.getEffectVolume(0.2);
+const launchDelay = 500;
+let delayAccumulator = 0;
 
 for (const target of targetTokens) {
-    sequence
-        .effect()
-            .xray(game.modules.get("lancer-weapon-fx").api.isEffectIgnoreFogOfWar())
-            .aboveInterface(game.modules.get("lancer-weapon-fx").api.isEffectIgnoreLightingColoration())
-            .file("jb2a.melee_attack.03.greatsword")
-            .tint("#080303")
-            .filter("Glow", { color: 0x8f0f0f })
-            .scaleToObject(4.5)
-            .atLocation(sourceToken)
-            .moveTowards(target)
-            .missed(targetsMissed.has(target.id))
-            .waitUntilFinished(-2500);
+    let sequence = new Sequence();
 
+    const isFacingLeft = target.x < sourceToken.x;
     sequence
         .sound()
             .file("modules/lancer-weapon-fx/soundfx/bladeswing.ogg")
-            .delay(500)
-            .volume(game.modules.get("lancer-weapon-fx").api.getEffectVolume(0.7))
-            .waitUntilFinished(-1350);
+            .volume(volume)
+            .delay(750)
+        .effect()
+            .xray(game.modules.get("lancer-weapon-fx").api.isEffectIgnoreFogOfWar())
+            .aboveInterface(game.modules.get("lancer-weapon-fx").api.isEffectIgnoreLightingColoration())
+            .file("jb2a.greatsword.throw")
+            .atLocation(sourceToken)
+            .mirrorY(isFacingLeft)
+            .stretchTo(target)
+            .missed(targetsMissed.has(target.id))
+            .waitUntilFinished(-700);
 
     if (!targetsMissed.has(target.id)) {
-        sequence
-            .sound()
-                .file("modules/lancer-weapon-fx/soundfx/bladehit.ogg")
-                .volume(game.modules.get("lancer-weapon-fx").api.getEffectVolume(0.7));
-
         sequence
             .effect()
                 .xray(game.modules.get("lancer-weapon-fx").api.isEffectIgnoreFogOfWar())
                 .aboveInterface(game.modules.get("lancer-weapon-fx").api.isEffectIgnoreLightingColoration())
-                .file("jb2a.impact.blue")
-                .scaleToObject(2)
+                .file("jb2a.impact.001.blue")
                 .atLocation(target)
-                .waitUntilFinished(-1500);
+                .scale(0.5)
+            .sound()
+                .file("modules/lancer-weapon-fx/soundfx/bladehit.ogg")
+                .volume(volume);
     }
+
     if (targetsMissed.has(target.id)) game.modules.get("lancer-weapon-fx").api.addMissToSequence(sequence, target.id);
     if (targetsCrit.has(target.id)) game.modules.get("lancer-weapon-fx").api.addCritToSequence(sequence, target.id);
+    setTimeout(() => sequence.play(), launchDelay * delayAccumulator++);
 }
-sequence.play();

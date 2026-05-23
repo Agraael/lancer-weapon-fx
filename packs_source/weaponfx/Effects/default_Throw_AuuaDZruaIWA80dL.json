@@ -1,0 +1,10 @@
+{
+    "_id": "AuuaDZruaIWA80dL",
+    "name": "default_Throw",
+    "type": "script",
+    "img": "icons/svg/dice-target.svg",
+    "scope": "global",
+    "folder": "Qf6H7pepYZi6Oa6S",
+    "_key": "!macros!AuuaDZruaIWA80dL",
+    "command_source": "packs_source/weaponfx/Effects/default_Throw_AuuaDZruaIWA80dL.js"
+}

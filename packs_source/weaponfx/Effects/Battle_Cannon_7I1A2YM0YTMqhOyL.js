@@ -5,9 +5,9 @@ game.modules.get("lancer-weapon-fx").api.preloadMissAndCrit();
 
 await Sequencer.Preloader.preloadForClients([
     "modules/lancer-weapon-fx/soundfx/BR_Fire.ogg",
-    "jb2a.bullet.03.blue",
-    "modules/lancer-weapon-fx/soundfx/KineticImpact.ogg",
-    "jb2a.impact.orange.0",
+    "jb2a.bullet.02.orange",
+    "modules/lancer-weapon-fx/soundfx/AMR_Impact.ogg",
+    "jb2a.impact.010.orange",
 ]);
 
 let sequence = new Sequence();
@@ -23,7 +23,7 @@ for (let i = 0; i < targetTokens.length; i++) {
         .effect()
             .xray(game.modules.get("lancer-weapon-fx").api.isEffectIgnoreFogOfWar())
             .aboveInterface(game.modules.get("lancer-weapon-fx").api.isEffectIgnoreLightingColoration())
-            .file("jb2a.bullet.03.blue")
+            .file("jb2a.bullet.02.orange")
             .atLocation(sourceToken)
             .scale(0.7)
             .zIndex(1)
@@ -31,16 +31,16 @@ for (let i = 0; i < targetTokens.length; i++) {
             .stretchTo(target, { randomOffset: 0.6, gridUnits: true })
             .missed(targetsMissed.has(target.id))
             .name("hitLocation${i}")
-            .delay(500)
-            .waitUntilFinished(-600)
+            .delay(700)
+            .waitUntilFinished(-800)
         .sound()
-            .file("modules/lancer-weapon-fx/soundfx/KineticImpact.ogg")
+            .file("modules/lancer-weapon-fx/soundfx/AMR_Impact.ogg")
             .playIf(!targetsMissed.has(target.id))
             .volume(game.modules.get("lancer-weapon-fx").api.getEffectVolume(0.5))
         .effect()
             .xray(game.modules.get("lancer-weapon-fx").api.isEffectIgnoreFogOfWar())
             .aboveInterface(game.modules.get("lancer-weapon-fx").api.isEffectIgnoreLightingColoration())
-            .file("jb2a.impact.orange.0")
+            .file("jb2a.impact.010.orange")
             .playIf(!targetsMissed.has(target.id))
             .scaleToObject(1.5)
             .zIndex(2)
@@ -57,23 +57,23 @@ for (let i = 0; i < targetTokens.length; i++) {
         .effect()
             .xray(game.modules.get("lancer-weapon-fx").api.isEffectIgnoreFogOfWar())
             .aboveInterface(game.modules.get("lancer-weapon-fx").api.isEffectIgnoreLightingColoration())
-            .file("jb2a.bullet.03.blue")
+            .file("jb2a.bullet.02.orange")
             .atLocation(sourceToken)
             .scale(0.7)
             .playbackRate(1.5)
             .stretchTo(target, { randomOffset: 0.6, gridUnits: true })
             .missed(targetsMissed.has(target.id))
             .name("hitLocation${i}")
-            .delay(500)
-            .waitUntilFinished(-600)
+            .delay(700)
+            .waitUntilFinished(-800)
         .sound()
-            .file("modules/lancer-weapon-fx/soundfx/KineticImpact.ogg")
+            .file("modules/lancer-weapon-fx/soundfx/AMR_Impact.ogg")
             .playIf(!targetsMissed.has(target.id))
             .volume(game.modules.get("lancer-weapon-fx").api.getEffectVolume(0.5))
         .effect()
             .xray(game.modules.get("lancer-weapon-fx").api.isEffectIgnoreFogOfWar())
             .aboveInterface(game.modules.get("lancer-weapon-fx").api.isEffectIgnoreLightingColoration())
-            .file("jb2a.impact.orange.0")
+            .file("jb2a.impact.010.orange")
             .playIf(!targetsMissed.has(target.id))
             .scaleToObject(1.5)
             .atLocation("hitLocation${i}")

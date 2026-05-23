@@ -1,23 +1,30 @@
-const { targetsMissed, targetTokens, sourceToken } = game.modules.get("lancer-weapon-fx").api.getMacroVariables(this);
-
-const target = targetTokens[0];
+const { targetsMissed, targetsCrit, targetTokens, sourceToken } = game.modules
+    .get("lancer-weapon-fx")
+    .api.getMacroVariables(this);
+game.modules.get("lancer-weapon-fx").api.preloadMissAndCrit();
 
 await Sequencer.Preloader.preloadForClients([
     "jb2a.fire_jet.orange",
     "modules/lancer-weapon-fx/soundfx/flamethrower_fire.ogg",
 ]);
 
-let sequence = new Sequence()
+let sequence = new Sequence();
 
-    .effect()
-        .xray(game.modules.get("lancer-weapon-fx").api.isEffectIgnoreFogOfWar())
-        .aboveInterface(game.modules.get("lancer-weapon-fx").api.isEffectIgnoreLightingColoration())
-        .file("jb2a.fire_jet.orange")
-        .filter("ColorMatrix", { hue: 210 })
-        .filter("Glow", { distance: 3, color: 0xe99649, innerStrength: 2 })
-        .atLocation(sourceToken)
-        .stretchTo(target)
-    .sound()
-        .file("modules/lancer-weapon-fx/soundfx/flamethrower_fire.ogg")
-        .volume(game.modules.get("lancer-weapon-fx").api.getEffectVolume(0.5))
-    .play();
+for (const target of targetTokens) {
+    sequence
+        .effect()
+            .xray(game.modules.get("lancer-weapon-fx").api.isEffectIgnoreFogOfWar())
+            .aboveInterface(game.modules.get("lancer-weapon-fx").api.isEffectIgnoreLightingColoration())
+            .file("jb2a.fire_jet.orange")
+            .filter("ColorMatrix", { hue: 210 })
+            .filter("Glow", { distance: 3, color: 0xe99649, innerStrength: 2 })
+            .atLocation(sourceToken)
+            .stretchTo(target)
+        .sound()
+            .file("modules/lancer-weapon-fx/soundfx/flamethrower_fire.ogg")
+            .volume(game.modules.get("lancer-weapon-fx").api.getEffectVolume(0.5))
+            .waitUntilFinished();
+    if (targetsMissed.has(target.id)) game.modules.get("lancer-weapon-fx").api.addMissToSequence(sequence, target.id);
+    if (targetsCrit.has(target.id)) game.modules.get("lancer-weapon-fx").api.addCritToSequence(sequence, target.id);
+}
+sequence.play();

@@ -11,7 +11,9 @@ await Sequencer.Preloader.preloadForClients([
     "modules/lancer-weapon-fx/video/pw_nuke_effect.webm",
 ]);
 
-new Sequence()
+let sequence = new Sequence();
+
+sequence
 
     .canvasPan()
         .duration(1000)

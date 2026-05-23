@@ -1,4 +1,10 @@
-import { euclideanDistance, getMacroVariables } from "./utils.js";
+import {
+    euclideanDistance,
+    getMacroVariables,
+    preloadMissAndCrit,
+    addMissToSequence,
+    addCritToSequence,
+} from "./utils.js";
 import LloydsAlgorithm from "./lloydsAlgorithm.js";
 import { SETTING_IS_IGNORE_FOG_OF_WAR, SETTING_IS_IGNORE_LIGHTING_COLORATION, SETTING_VOLUME } from "./settings.js";
 import { MODULE_ID } from "./consts.js";
@@ -28,6 +34,9 @@ class ModuleApi {
     }
 
     static getMacroVariables = getMacroVariables;
+    static preloadMissAndCrit = preloadMissAndCrit;
+    static addMissToSequence = addMissToSequence;
+    static addCritToSequence = addCritToSequence;
     static euclideanDistance = euclideanDistance;
 }
 

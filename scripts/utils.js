@@ -1,5 +1,6 @@
 import { MODULE_ID } from "./consts.js";
 import { SETTING_DEBUG_IS_DEFAULT_MISS } from "./settings.js";
+import { getTokenByIdOrActorId } from "./flow/common.js";
 
 export function euclideanDistance(point1, point2) {
     // Calculate the Euclidean distance between two points.
@@ -43,17 +44,39 @@ export function getMacroVariables(macro = null) {
             targetsMissed: game.settings.get(MODULE_ID, SETTING_DEBUG_IS_DEFAULT_MISS)
                 ? new Set(targetsFallback.map(target => target.id))
                 : new Set(),
+            targetsCrit: new Set(),
         };
     }
 
-    const { sourceToken, targetTokens, targetsMissed } = flowInfo;
+    const { sourceToken, targetTokens, targetsMissed, targetsCrit } = flowInfo;
     return {
         sourceToken: sourceToken || sourceTokenFallback,
         targetTokens: targetTokens || targetsFallback,
         targetsMissed,
+        targetsCrit,
     };
 }
 
 export function getSearchString(str) {
     return (str || "").toLowerCase().trim();
+}
+
+export async function preloadMissAndCrit() {
+    if (window.Sequencer && game.modules.get("jb2a_patreon")?.active) {
+        await Sequencer.Preloader.preloadForClients(["jb2a.ui.miss.red", "jb2a.ui.critical.yellow"]);
+    }
+}
+
+export function addMissToSequence(sequence, targetId) {
+    const targetToken = getTokenByIdOrActorId(targetId);
+    if (targetToken && window.Sequence && sequence && game.modules.get("jb2a_patreon")?.active) {
+        sequence.effect().scale(0.5).file("jb2a.ui.miss.red").attachTo(targetToken);
+    }
+}
+
+export function addCritToSequence(sequence, targetId) {
+    const targetToken = getTokenByIdOrActorId(targetId);
+    if (targetToken && window.Sequence && sequence && game.modules.get("jb2a_patreon")?.active) {
+        sequence.effect().scale(0.5).file("jb2a.ui.critical.yellow").attachTo(targetToken);
+    }
 }

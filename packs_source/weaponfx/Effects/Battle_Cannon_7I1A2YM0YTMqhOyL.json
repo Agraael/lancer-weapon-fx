@@ -1,0 +1,10 @@
+{
+    "_id": "7I1A2YM0YTMqhOyL",
+    "name": "Battle Cannon",
+    "type": "script",
+    "img": "icons/svg/dice-target.svg",
+    "scope": "global",
+    "folder": "Qf6H7pepYZi6Oa6S",
+    "_key": "!macros!7I1A2YM0YTMqhOyL",
+    "command_source": "packs_source/weaponfx/Effects/Battle_Cannon_7I1A2YM0YTMqhOyL.js"
+}

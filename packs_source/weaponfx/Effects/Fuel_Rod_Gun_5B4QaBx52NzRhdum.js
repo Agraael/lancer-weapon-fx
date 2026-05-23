@@ -1,6 +1,7 @@
-const { targetsMissed, targetTokens, sourceToken } = game.modules.get("lancer-weapon-fx").api.getMacroVariables(this);
-
-const target = targetTokens[0];
+const { targetsMissed, targetsCrit, targetTokens, sourceToken } = game.modules
+    .get("lancer-weapon-fx")
+    .api.getMacroVariables(this);
+game.modules.get("lancer-weapon-fx").api.preloadMissAndCrit();
 
 await Sequencer.Preloader.preloadForClients([
     "modules/lancer-weapon-fx/soundfx/APR2_Load.ogg",
@@ -11,45 +12,50 @@ await Sequencer.Preloader.preloadForClients([
     "modules/lancer-weapon-fx/soundfx/APR2_Impact.ogg",
 ]);
 
-let sequence = new Sequence()
+let sequence = new Sequence();
 
-    .sound()
-        .file("modules/lancer-weapon-fx/soundfx/APR2_Load.ogg")
-        .volume(game.modules.get("lancer-weapon-fx").api.getEffectVolume(0.5))
-        .waitUntilFinished()
-    .sound()
-        .file("modules/lancer-weapon-fx/soundfx/APR2_Fire.ogg")
-        .volume(game.modules.get("lancer-weapon-fx").api.getEffectVolume(0.5))
-    .effect()
-        .xray(game.modules.get("lancer-weapon-fx").api.isEffectIgnoreFogOfWar())
-        .aboveInterface(game.modules.get("lancer-weapon-fx").api.isEffectIgnoreLightingColoration())
-        .file("jb2a.lasershot.green")
-        .atLocation(sourceToken)
-        .stretchTo(target)
-        .missed(targetsMissed.has(target.id))
-        .scale(2.0)
-        .waitUntilFinished(-400);
-if (!targetsMissed.has(target.id)) {
+for (const target of targetTokens) {
     sequence
-        .effect()
-            .xray(game.modules.get("lancer-weapon-fx").api.isEffectIgnoreFogOfWar())
-            .aboveInterface(game.modules.get("lancer-weapon-fx").api.isEffectIgnoreLightingColoration())
-            .file("jb2a.toll_the_dead.green.shockwave")
-            .atLocation(target)
-            .scale(0.7)
-            .zIndex(1)
-        .effect()
-            .xray(game.modules.get("lancer-weapon-fx").api.isEffectIgnoreFogOfWar())
-            .aboveInterface(game.modules.get("lancer-weapon-fx").api.isEffectIgnoreLightingColoration())
-            .file("jb2a.smoke.puff.side.02.white")
-            .atLocation(target)
-            .rotateTowards(sourceToken)
-            .rotate(180)
-            .zIndex(1)
-            .tint("#43b918")
         .sound()
-            .file("modules/lancer-weapon-fx/soundfx/APR2_Impact.ogg")
-            .volume(game.modules.get("lancer-weapon-fx").api.getEffectVolume(0.5));
+            .file("modules/lancer-weapon-fx/soundfx/APR2_Load.ogg")
+            .volume(game.modules.get("lancer-weapon-fx").api.getEffectVolume(0.5))
+            .waitUntilFinished()
+        .sound()
+            .file("modules/lancer-weapon-fx/soundfx/APR2_Fire.ogg")
+            .volume(game.modules.get("lancer-weapon-fx").api.getEffectVolume(0.5))
+        .effect()
+            .xray(game.modules.get("lancer-weapon-fx").api.isEffectIgnoreFogOfWar())
+            .aboveInterface(game.modules.get("lancer-weapon-fx").api.isEffectIgnoreLightingColoration())
+            .file("jb2a.lasershot.green")
+            .atLocation(sourceToken)
+            .stretchTo(target)
+            .missed(targetsMissed.has(target.id))
+            .scale(2.0)
+            .waitUntilFinished(-400);
+    if (!targetsMissed.has(target.id)) {
+        sequence
+            .effect()
+                .xray(game.modules.get("lancer-weapon-fx").api.isEffectIgnoreFogOfWar())
+                .aboveInterface(game.modules.get("lancer-weapon-fx").api.isEffectIgnoreLightingColoration())
+                .file("jb2a.toll_the_dead.green.shockwave")
+                .atLocation(target)
+                .scale(0.7)
+                .zIndex(1)
+            .effect()
+                .xray(game.modules.get("lancer-weapon-fx").api.isEffectIgnoreFogOfWar())
+                .aboveInterface(game.modules.get("lancer-weapon-fx").api.isEffectIgnoreLightingColoration())
+                .file("jb2a.smoke.puff.side.02.white")
+                .atLocation(target)
+                .rotateTowards(sourceToken)
+                .rotate(180)
+                .zIndex(1)
+                .tint("#43b918")
+            .sound()
+                .file("modules/lancer-weapon-fx/soundfx/APR2_Impact.ogg")
+                .volume(game.modules.get("lancer-weapon-fx").api.getEffectVolume(0.5));
+    }
+    if (targetsMissed.has(target.id)) game.modules.get("lancer-weapon-fx").api.addMissToSequence(sequence, target.id);
+    if (targetsCrit.has(target.id)) game.modules.get("lancer-weapon-fx").api.addCritToSequence(sequence, target.id);
 }
 
 sequence.play();
