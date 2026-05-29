@@ -16,7 +16,7 @@
             "name": "LaSossis"
         }
     ],
-    "version": "2.4.0-lasossis.1",
+    "version": "2.4.0",
     "compatibility": {
         "minimum": 13,
         "verified": "13"
