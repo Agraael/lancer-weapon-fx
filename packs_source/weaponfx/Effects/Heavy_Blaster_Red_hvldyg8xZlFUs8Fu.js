@@ -1,7 +1,4 @@
-const { targetsMissed, targetsCrit, targetTokens, sourceToken } = game.modules
-    .get("lancer-weapon-fx")
-    .api.getMacroVariables(this);
-game.modules.get("lancer-weapon-fx").api.preloadMissAndCrit();
+const { targetsMissed, targetTokens, sourceToken } = game.modules.get("lancer-weapon-fx").api.getMacroVariables(this);
 
 await Sequencer.Preloader.preloadForClients([
     "modules/lancer-weapon-fx/soundfx/Annihilator_Charge.ogg",
@@ -31,9 +28,6 @@ for (const target of targetTokens) {
         .sound()
             .file("modules/lancer-weapon-fx/soundfx/AMR_Impact.ogg")
             .volume(game.modules.get("lancer-weapon-fx").api.getEffectVolume(0.5));
-
-    if (targetsMissed.has(target.id)) game.modules.get("lancer-weapon-fx").api.addMissToSequence(sequence, target.id);
-    if (targetsCrit.has(target.id)) game.modules.get("lancer-weapon-fx").api.addCritToSequence(sequence, target.id);
 }
 
 sequence.play();

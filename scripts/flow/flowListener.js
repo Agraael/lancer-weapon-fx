@@ -17,21 +17,15 @@ const _pGetFlowInfo = async (state, { fallbackActionIdentifier = null } = {}) =>
             hit_result: state.data.hit_results?.[i],
         }),
     );
-    // Check if this is a thrown weapon attack
-    const isThrow = state.data?.is_throw === true;
-    const baseItemLid = state.item?.system?.lid;
-
-    // If throwing, try to find a throw-specific FX first
-    const itemLid = isThrow && baseItemLid ? `${baseItemLid}__throwfx` : baseItemLid;
 
     return new FlowInfo({
         sourceToken: getTokenByIdOrActorId(state.actor.token?.id || state.actor?.id),
         macroUuid: await pGetMacroUuid({
             // Prefer the token base actor, if available. This ensures linking for synthetic (NPC token) actors.
             actorUuid: state.actor?.token?.baseActor?.uuid || state.actor?.uuid,
-            itemLid: itemLid,
+            itemLid: state.item?.system?.lid,
             itemName: state.item?.name,
-            fallbackActionIdentifier: isThrow ? "default_throwfx" : fallbackActionIdentifier,
+            fallbackActionIdentifier,
         }),
         targetTokens: zippedTargetInfo
             .map(({ target, hit_result }) => hit_result?.target ?? target?.target)

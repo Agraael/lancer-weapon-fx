@@ -1,7 +1,6 @@
-const { targetsMissed, targetsCrit, targetTokens, sourceToken } = game.modules
+const { targetsMissed, targetTokens, sourceToken } = game.modules
     .get("lancer-weapon-fx")
     .api.getMacroVariables(this, typeof token !== "undefined" ? token : null);
-game.modules.get("lancer-weapon-fx").api.preloadMissAndCrit();
 
 const target = targetTokens[0];
 
@@ -56,8 +55,6 @@ for (const target of targetTokens) {
                 .file("modules/lancer-weapon-fx/soundfx/APR2_Impact.ogg")
                 .volume(game.modules.get("lancer-weapon-fx").api.getEffectVolume(0.5));
     }
-    if (targetsMissed.has(target.id)) game.modules.get("lancer-weapon-fx").api.addMissToSequence(sequence, target.id);
-    if (targetsCrit.has(target.id)) game.modules.get("lancer-weapon-fx").api.addCritToSequence(sequence, target.id);
 }
 
 sequence.play();

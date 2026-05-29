@@ -1,7 +1,6 @@
-const { targetsMissed, targetsCrit, targetTokens, sourceToken } = game.modules
+const { targetsMissed, targetTokens, sourceToken } = game.modules
     .get("lancer-weapon-fx")
     .api.getMacroVariables(this, typeof token !== "undefined" ? token : null);
-game.modules.get("lancer-weapon-fx").api.preloadMissAndCrit();
 
 // Pinaka wants 2 missiles, so get 2 groups
 const targetPoints = game.modules.get("lancer-weapon-fx").api.getTargetLocationsFromTokenGroup(targetTokens, 2);
@@ -55,7 +54,5 @@ for (const targetPoint of targetPoints) {
             .atLocation(targetPoint)
             .scale(1.2)
             .zIndex(1);
-    if (targetsMissed.has(target.id)) game.modules.get("lancer-weapon-fx").api.addMissToSequence(sequence, target.id);
-    if (targetsCrit.has(target.id)) game.modules.get("lancer-weapon-fx").api.addCritToSequence(sequence, target.id);
 }
 sequence.play();

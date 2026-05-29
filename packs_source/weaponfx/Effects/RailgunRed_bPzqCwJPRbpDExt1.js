@@ -1,7 +1,4 @@
-const { targetsMissed, targetsCrit, targetTokens, sourceToken } = game.modules
-    .get("lancer-weapon-fx")
-    .api.getMacroVariables(this);
-game.modules.get("lancer-weapon-fx").api.preloadMissAndCrit();
+const { targetsMissed, targetTokens, sourceToken } = game.modules.get("lancer-weapon-fx").api.getMacroVariables(this);
 
 const findFarthestTargetOfGroup = function (targetTokens) {
     let farthestToken = null;
@@ -12,8 +9,6 @@ const findFarthestTargetOfGroup = function (targetTokens) {
             farthestToken = t;
             farthestTokenDistance = distance;
         }
-        if (targetsMissed.has(t.id)) game.modules.get("lancer-weapon-fx").api.addMissToSequence(sequence, t.id);
-        if (targetsCrit.has(t.id)) game.modules.get("lancer-weapon-fx").api.addCritToSequence(sequence, t.id);
     });
 
     return farthestToken;

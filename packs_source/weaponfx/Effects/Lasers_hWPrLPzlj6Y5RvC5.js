@@ -1,7 +1,6 @@
-const { targetsMissed, targetsCrit, targetTokens, sourceToken } = game.modules
+const { targetsMissed, targetTokens, sourceToken } = game.modules
     .get("lancer-weapon-fx")
     .api.getMacroVariables(this, typeof token !== "undefined" ? token : null);
-game.modules.get("lancer-weapon-fx").api.preloadMissAndCrit();
 
 const random = Sequencer.Helpers.random_float_between(200, 300);
 
@@ -42,7 +41,5 @@ for (let i = 0; i < targetTokens.length; i++) {
             .name(`impact${i}`)
             .repeats(3, random)
             .waitUntilFinished();
-    if (targetsMissed.has(target.id)) game.modules.get("lancer-weapon-fx").api.addMissToSequence(sequence, target.id);
-    if (targetsCrit.has(target.id)) game.modules.get("lancer-weapon-fx").api.addCritToSequence(sequence, target.id);
 }
 sequence.play();

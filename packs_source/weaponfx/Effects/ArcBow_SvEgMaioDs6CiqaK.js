@@ -1,7 +1,6 @@
-const { targetsMissed, targetsCrit, targetTokens, sourceToken } = game.modules
+const { targetsMissed, targetTokens, sourceToken } = game.modules
     .get("lancer-weapon-fx")
     .api.getMacroVariables(this, typeof token !== "undefined" ? token : null);
-game.modules.get("lancer-weapon-fx").api.preloadMissAndCrit();
 
 const findFarthestTargetOfGroup = function (targetTokens) {
     let farthestToken = null;
@@ -46,8 +45,6 @@ const repeatImpactAnimationForEachTarget = function (sequence, targets) {
                     .stretchTo(t, { randomOffset: 0.5 })
                     .delay(800);
         }
-        if (targetsMissed.has(t.id)) game.modules.get("lancer-weapon-fx").api.addMissToSequence(sequence, t.id);
-        if (targetsCrit.has(t.id)) game.modules.get("lancer-weapon-fx").api.addCritToSequence(sequence, t.id);
     });
     return sequence;
 };
@@ -90,4 +87,5 @@ sequence
         .scale(0.6);
 
 sequence = repeatImpactAnimationForEachTarget(sequence, targetTokens);
+
 sequence.play();

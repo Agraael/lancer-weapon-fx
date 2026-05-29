@@ -1,7 +1,6 @@
-const { targetsMissed, targetsCrit, targetTokens, sourceToken } = game.modules
+const { targetsMissed, targetTokens, sourceToken } = game.modules
     .get("lancer-weapon-fx")
     .api.getMacroVariables(this, typeof token !== "undefined" ? token : null);
-game.modules.get("lancer-weapon-fx").api.preloadMissAndCrit();
 
 const pathVariantMissile = game.modules.get("lancer-weapon-fx").api.getSequencerPathVariant("jb2a.pack_hound_missile");
 
@@ -53,7 +52,5 @@ for (let i = 0; i < targetTokens.length; i++) {
                 .volume(game.modules.get("lancer-weapon-fx").api.getEffectVolume(0.5))
                 .waitUntilFinished(-8500);
     }
-    if (targetsMissed.has(target.id)) game.modules.get("lancer-weapon-fx").api.addMissToSequence(sequence, target.id);
-    if (targetsCrit.has(target.id)) game.modules.get("lancer-weapon-fx").api.addCritToSequence(sequence, target.id);
 }
 sequence.play();

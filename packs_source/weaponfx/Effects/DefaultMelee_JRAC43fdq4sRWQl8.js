@@ -1,7 +1,6 @@
-const { targetsMissed, targetsCrit, targetTokens, sourceToken } = game.modules
+const { targetsMissed, targetTokens, sourceToken } = game.modules
     .get("lancer-weapon-fx")
     .api.getMacroVariables(this, typeof token !== "undefined" ? token : null);
-game.modules.get("lancer-weapon-fx").api.preloadMissAndCrit();
 
 await Sequencer.Preloader.preloadForClients([
     "jb2a.melee_generic.slash.01.orange",
@@ -46,8 +45,5 @@ for (const target of targetTokens) {
             .atLocation(target, { randomOffset: 0.8, gridUnits: true })
             .repeats(2, 80)
             .waitUntilFinished(-2200);
-
-    if (targetsMissed.has(target.id)) game.modules.get("lancer-weapon-fx").api.addMissToSequence(sequence, target.id);
-    if (targetsCrit.has(target.id)) game.modules.get("lancer-weapon-fx").api.addCritToSequence(sequence, target.id);
 }
 sequence.play();

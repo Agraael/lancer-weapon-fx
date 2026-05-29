@@ -1,9 +1,5 @@
 // Macro: Combat Knife Throw FX
-const { targetsMissed, targetsCrit, targetTokens, sourceToken } = game.modules
-    .get("lancer-weapon-fx")
-    .api.getMacroVariables(this);
-
-game.modules.get("lancer-weapon-fx").api.preloadMissAndCrit();
+const { targetsMissed, targetTokens, sourceToken } = game.modules.get("lancer-weapon-fx").api.getMacroVariables(this);
 
 await Sequencer.Preloader.preloadForClients([
     "modules/lancer-weapon-fx/soundfx/bladeswing.ogg",
@@ -48,7 +44,5 @@ for (const target of targetTokens) {
                 .volume(volume);
     }
 
-    if (targetsMissed.has(target.id)) game.modules.get("lancer-weapon-fx").api.addMissToSequence(sequence, target.id);
-    if (targetsCrit.has(target.id)) game.modules.get("lancer-weapon-fx").api.addCritToSequence(sequence, target.id);
     setTimeout(() => sequence.play(), launchDelay * delayAccumulator++);
 }

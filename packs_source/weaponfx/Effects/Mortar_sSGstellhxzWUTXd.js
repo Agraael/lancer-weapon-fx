@@ -1,7 +1,6 @@
-const { targetsMissed, targetsCrit, targetTokens, sourceToken } = game.modules
+const { targetsMissed, targetTokens, sourceToken } = game.modules
     .get("lancer-weapon-fx")
     .api.getMacroVariables(this, typeof token !== "undefined" ? token : null);
-game.modules.get("lancer-weapon-fx").api.preloadMissAndCrit();
 
 const centerMass = game.modules.get("lancer-weapon-fx").api.getTargetLocationsFromTokenGroup(targetTokens, 1)[0];
 
@@ -18,8 +17,6 @@ const repeatImpactAnimationForEachTarget = function (sequence, targetTokens) {
                     .scale(0.7)
                     .center();
         }
-        if (targetsMissed.has(t.id)) game.modules.get("lancer-weapon-fx").api.addMissToSequence(sequence, t.id);
-        if (targetsCrit.has(t.id)) game.modules.get("lancer-weapon-fx").api.addCritToSequence(sequence, t.id);
     });
     return sequence;
 };
