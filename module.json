@@ -16,9 +16,9 @@
             "name": "LaSossis"
         }
     ],
-    "version": "2.3.0-lasossis.1",
+    "version": "2.4.0-lasossis.1",
     "compatibility": {
-        "minimum": "13",
+        "minimum": 13,
         "verified": "13"
     },
     "url": "https://github.com/Z3nner/lancer-weapon-fx",
